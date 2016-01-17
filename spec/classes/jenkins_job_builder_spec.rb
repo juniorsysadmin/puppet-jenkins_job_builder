@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe 'jenkins_job_builder' do
   context 'supported operating systems' do
-    ['Debian', 'RedHat'].each do |osfamily|
+    %w(Debian RedHat).each do |osfamily|
       describe "jenkins_job_builder class without any parameters on #{osfamily}" do
-        let(:params) {{ }}
+        let(:params) { {} }
         let(:facts) {{
           :osfamily => osfamily,
         }}
@@ -19,7 +19,7 @@ describe 'jenkins_job_builder' do
         it { should contain_package('jenkins-job-builder').with_ensure('latest') }
 
         it { should contain_file('/etc/jenkins_jobs').with_ensure('directory') }
-        it { should contain_file('/etc/jenkins_jobs/jenkins_jobs.ini').with_ensure('present')}
+        it { should contain_file('/etc/jenkins_jobs/jenkins_jobs.ini').with_ensure('present') }
 
         it { should contain_ini_setting('jenkins-jobs user').with(
           'ensure'  => 'present',
@@ -27,8 +27,8 @@ describe 'jenkins_job_builder' do
           'section' => 'jenkins',
           'setting' => 'user',
           'value'   => '',
-          'require' => 'File[/etc/jenkins_jobs/jenkins_jobs.ini]'
-        )}
+          'require' => 'File[/etc/jenkins_jobs/jenkins_jobs.ini]')
+        }
 
         it { should contain_ini_setting('jenkins-jobs password').with(
           'ensure'  => 'present',
@@ -36,8 +36,8 @@ describe 'jenkins_job_builder' do
           'section' => 'jenkins',
           'setting' => 'password',
           'value'   => '',
-          'require' => 'File[/etc/jenkins_jobs/jenkins_jobs.ini]'
-        )}
+          'require' => 'File[/etc/jenkins_jobs/jenkins_jobs.ini]')
+        }
 
         it { should contain_ini_setting('jenkins-jobs url').with(
           'ensure'  => 'present',
@@ -45,8 +45,8 @@ describe 'jenkins_job_builder' do
           'section' => 'jenkins',
           'setting' => 'url',
           'value'   => 'http://localhost:8080',
-          'require' => 'File[/etc/jenkins_jobs/jenkins_jobs.ini]'
-        )}
+          'require' => 'File[/etc/jenkins_jobs/jenkins_jobs.ini]')
+        }
 
         it { should contain_ini_setting('jenkins-jobs hipchat token').with(
           'ensure'  => 'present',
@@ -54,12 +54,12 @@ describe 'jenkins_job_builder' do
           'section' => 'hipchat',
           'setting' => 'authtoken',
           'value'   => '',
-          'require' => 'File[/etc/jenkins_jobs/jenkins_jobs.ini]'
-        )}
+          'require' => 'File[/etc/jenkins_jobs/jenkins_jobs.ini]')
+        }
       end
     end
     describe "jenkins_job_builder class without any parameters on a 'Debian' OS" do
-      let(:params) {{ }}
+      let(:params) { {} }
       let(:facts) {{
         :osfamily => 'Debian',
       }}
@@ -67,10 +67,9 @@ describe 'jenkins_job_builder' do
       ['python', 'python-pip', 'pyyaml'].each do |dep|
         it { should contain_package(dep).with_ensure('present') }
       end
-
     end
     describe "jenkins_job_builder class without any parameters on a 'RedHat' OS" do
-      let(:params) {{ }}
+      let(:params) { {} }
       let(:facts) {{
         :osfamily => 'RedHat',
       }}
@@ -78,7 +77,6 @@ describe 'jenkins_job_builder' do
       ['python', 'python-pip', 'pyyaml', 'python-argparse'].each do |dep|
         it { should contain_package(dep).with_ensure('present') }
       end
-
     end
   end
 
@@ -93,9 +91,8 @@ describe 'jenkins_job_builder' do
 
       it { should contain_vcsrepo('/opt/jenkins_job_builder').with(
         'ensure'   => 'latest',
-        'provider' => 'git'
-      )}
-
+        'provider' => 'git')
+      }
     end
   end
 
@@ -133,13 +130,12 @@ describe 'jenkins_job_builder' do
       }}
 
       it { should contain_file('/tmp/jenkins-test01.yaml').with(
-        'content' => "--- \n  - job: \n      name: test01\n      description: \"the first jenkins job\"\n"
-      )}
+        'content' => "---\n- job:\n    name: test01\n    description: the first jenkins job\n\n")
+      }
 
       it { should contain_file('/tmp/jenkins-test02.yaml').with(
-        'content' => "--- \n  - job: \n      name: test02\n      description: \"the second jenkins job\"\n"
-      )}
+        'content' => "---\n- job:\n    name: test02\n    description: the second jenkins job\n\n")
+      }
     end
   end
-
 end

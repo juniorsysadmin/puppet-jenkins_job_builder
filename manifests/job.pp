@@ -65,7 +65,7 @@ define jenkins_job_builder::job (
   file { "/tmp/jenkins-${name}.yaml":
     ensure  => present,
     content => $content,
-    notify  => Exec["manage jenkins job - ${name}"]
+    notify  => Exec["manage jenkins job - ${name}"],
   }
 
   exec { "manage jenkins job - ${name}":
@@ -73,7 +73,7 @@ define jenkins_job_builder::job (
     refreshonly => true,
     tries       => $tries,
     try_sleep   => $try_sleep,
-    require     => Service[$service_name]
+    require     => Service[$service_name],
   }
 
 }

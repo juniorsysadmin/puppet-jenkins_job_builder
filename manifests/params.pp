@@ -24,7 +24,7 @@ class jenkins_job_builder::params {
     'RedHat', 'Amazon': {
       $python_packages = [ 'python', 'python-devel', 'python-pip', 'python-argparse']
     }
-    debian: {
+    'debian': {
       $python_packages = [ 'python', 'python-dev', 'python-pip', 'python-argparse' ]
     }
     default: {

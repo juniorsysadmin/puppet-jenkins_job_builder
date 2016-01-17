@@ -2,10 +2,8 @@ require 'spec_helper_acceptance'
 include Beaker::HostPrebuiltSteps
 
 describe 'jenkins_job_builder class' do
-
   context 'with a defined job' do
     it 'should work with no errors' do
-
       pp = <<-EOS
       class { 'jenkins': } ->
       class { 'jenkins_job_builder': }
@@ -20,7 +18,7 @@ describe 'jenkins_job_builder class' do
       it { should be_installed.by('pip') }
     end
 
-    #TODO: test ini file
+    # TODO: test ini file
 
     yaml_content = <<-'YAML'
 ---

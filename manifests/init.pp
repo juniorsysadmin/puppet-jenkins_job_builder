@@ -64,7 +64,7 @@ class jenkins_job_builder(
   validate_string($git_url)
   validate_bool($install_from_git)
 
-  class {'jenkins_job_builder::install': } ->
-  class {'jenkins_job_builder::config': } ->
+  class {'::jenkins_job_builder::install': } ->
+  class {'::jenkins_job_builder::config': } ->
   Class['jenkins_job_builder']
 }
